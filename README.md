@@ -8,7 +8,7 @@
 
 # NOT PIXEL BOT | Auto Claim and Print Pixel
 
-## Install NOT PIXELBOT
+## Install NOT PIXELBOT For LINUX
 ```
 bash <(curl -s https://data.zamzasalim.xyz/file/uploads/notpixel.sh)
 cd /root/notpixel
@@ -30,6 +30,27 @@ screen -S notpixel
 **Run Bot**
 ```
 python3 run.py
+```
+## Install NOT PIXELBOT For TERMUX
+```
+bash <(curl -s https://data.zamzasalim.xyz/file/uploads/notpixelmux.sh)
+```
+```
+cd notpixel
+```
+## Paste Token User
+```
+nano config.py
+```
+**After Paste CTRL + XY**
+## RUN Bot
+**Create Screen**
+```
+screen -S notpixel
+```
+**Run Bot**
+```
+python run.py
 ```
 ## Troubleshoot Screen 
 **Close Screen | CTRL + AD**
