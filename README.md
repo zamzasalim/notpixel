@@ -11,13 +11,13 @@
 ## Install NOT PIXELBOT For LINUX
 ```
 bash <(curl -s https://data.zamzasalim.xyz/file/uploads/notpixel.sh)
-cd /root/notpixel
 ```
 ## Token User | Token Query | Update Token
 **Use WebTelegram - Inspect Bot NotPixel - Application - __telegram__initParams - Copy Query= | user=**
 
 ## Paste Token User
 ```
+cd /root/notpixel
 nano config.py
 ```
 **After Paste CTRL + XY**
@@ -35,11 +35,9 @@ python3 run.py
 ```
 bash <(curl -s https://data.zamzasalim.xyz/file/uploads/notpixelmux.sh)
 ```
-```
-cd notpixel
-```
 ## Paste Token User
 ```
+cd notpixel
 nano config.py
 ```
 **After Paste CTRL + XY**
