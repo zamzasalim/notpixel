@@ -117,7 +117,7 @@ def main(auth, proxy=None):
     if proxy:
         session.proxies.update({'http': proxy, 'https': proxy})
 
-    claim_successful = claim(headers)  
+    claim_successful = claim(headers)  # Claim and check result
 
     size = len(image) * len(image[0])
     order = [i for i in range(size)]
@@ -141,7 +141,7 @@ def main(auth, proxy=None):
                 print(crayons.red("ERROR | Token User Error - Please Update Token"))
                 break
             elif not result:
-                break  
+                break  # If out of energy, exit loop for this account
 
         except IndexError:
             print(f"ERROR | IndexError at position: {pos_image}, Coordinates: ({y}, {x})")
@@ -157,14 +157,13 @@ while True:
 
     for index, (username, auth) in enumerate(accounts.items()):  
         if check_account_data(auth):
-            proxy_index = index % len(proxies)  
-            proxy = proxies[proxy_index] if proxies else None
+            proxy = proxies[index % len(proxies)] if proxies else None  # Use proxy if available
             
             ip, country = get_proxy_info(proxy) if proxy else (None, None)
             if ip and country:
-                print(f"INFO | {username} | Starting with proxy | Country: {country}")
+                print(f"INFO | {username} | Starting with Proxy | Country: {country}")
             else:
-                print(f"INFO | {username} | Starting without a valid proxy")
+                print(f"INFO | {username} | Starting without a Proxy")
             
             main(auth, proxy)  
             account_found = True
