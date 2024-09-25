@@ -1,4 +1,10 @@
-pillow==10.4.0
-setproctitle==1.3.3
-requests==2.31.0
-crayons==0.4.0
+pillow
+setproctitle
+requests
+crayons
+requests[socks]
+colorama
+httpx
+httpx_socks
+aiofiles
+aiosqlite
