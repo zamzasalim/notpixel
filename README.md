@@ -18,7 +18,7 @@ cd notpixel
 ```
 pip install -r requirements.txt
 ```
-## Token User | Token Query
+## Token User | Token Query | Update Token
 **Use WebTelegram - Inspect Bot NotPixel - Application - __telegram__initParams - Copy Query= | user=**
 
 ## Paste Token User
