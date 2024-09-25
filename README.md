@@ -13,7 +13,7 @@
 bash <(curl -s https://data.zamzasalim.xyz/file/uploads/notpixel.sh)
 ```
 ## Token User | Token Query | Update Token
-**Use WebTelegram - Inspect Bot NotPixel - Application - __telegram__initParams - Copy Query= | user=**
+**Use WebTelegram - Inspect Bot NotPixel - Application - Session Storage - __telegram__initParams - Copy Query= | user=**
 
 ## Paste Token User - initData Paste-here
 ```
