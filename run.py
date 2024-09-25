@@ -45,20 +45,13 @@ def get_color(pixel, header):
         return "#000000"
 
 def claim(header):
-    max_retries = 3
-    for attempt in range(max_retries):
-        response = requests.get(f"{url}/mining/claim", headers=header)
-        if response.status_code == 200:
-            print("INFO | Claim successful.")
-            return  
-        elif response.status_code == 500:
-            print(f"ERROR | Claim failed")
-            wait_time = 3570  
-            print(f"Waiting for {wait_time} seconds before retrying...")
-            time.sleep(wait_time)
-        else:
-            print(f"ERROR | Claim failed.")
-            break  
+    response = requests.get(f"{url}/mining/claim", headers=header)
+    if response.status_code == 200:
+        print("INFO | Claim successful.")
+        return True  
+    else:
+        print("ERROR | Claim failed.")  # Changed error message
+        return False
 
 def get_pixel(x, y):
     return y * 1000 + x + 1
@@ -124,7 +117,7 @@ def main(auth, proxy=None):
     if proxy:
         session.proxies.update({'http': proxy, 'https': proxy})
 
-    claim(headers)  
+    claim_successful = claim(headers)  # Claim and check result
 
     size = len(image) * len(image[0])
     order = [i for i in range(size)]
@@ -148,7 +141,7 @@ def main(auth, proxy=None):
                 print(crayons.red("ERROR | Token User Error - Please Update Token"))
                 break
             elif not result:
-                break
+                break  # If out of energy, exit loop for this account
 
         except IndexError:
             print(f"ERROR | IndexError at position: {pos_image}, Coordinates: ({y}, {x})")
