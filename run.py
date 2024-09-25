@@ -65,13 +65,6 @@ def paint(canvas_pos, color, header):
 
     if response.status_code == 400:
         print(crayons.red("INFO | Out of Energy"))
-        wait_time = random.randint(1800, 2400)
-        for remaining in range(wait_time, 0, -1):
-            hours, remainder = divmod(remaining, 3600)
-            minutes, seconds = divmod(remainder, 60)
-            print(crayons.red(f"ZERO") + f" | Waiting Full Energy {hours:02}:{minutes:02}:{seconds:02}...", end='\r')
-            time.sleep(1)
-        print()  
         return False  
 
     if response.status_code == 401:
@@ -79,6 +72,10 @@ def paint(canvas_pos, color, header):
 
     print(f"INFO | Paint: {x},{y} | " + crayons.green("Success!!"))
     return True
+
+def check_account_data(account):
+    """ Check if account contains 'user=' or 'query=' in the token """
+    return "user=" in account or "query=" in account
 
 def main(auth):
     headers = {'authorization': auth}
@@ -114,15 +111,24 @@ def main(auth):
 while True:
     clear_screen()  
     print_banner()
+
+    account_found = False
+
     for username, auth in config.accounts.items():  
-        print(f"INFO | {username} | Starting")  
-        main(auth)  
-    print(crayons.yellow("INFO | Restarting..."))
-    wait_time = random.randint(1200, 1800)  
+        if check_account_data(auth):
+            print(f"INFO | {username} | Starting")  
+            main(auth)  
+            account_found = True
+
+    if not account_found:
+        print(crayons.red("INFO | No valid account found."))
+    
+    print(crayons.red(f"ZERO") + " | Waiting Full Energy...")
+    wait_time = random.randint(1200, 1800)  # 20-30 minutes
     for remaining in range(wait_time, 0, -1):
         hours, remainder = divmod(remaining, 3600)
         minutes, seconds = divmod(remainder, 60)
-        print(crayons.red(f"INFO") + f" | Restart Countdown {hours:02}:{minutes:02}:{seconds:02}...", end='\r')
+        print(f"ZERO | Waiting Full Energy {hours:02}:{minutes:02}:{seconds:02}...", end='\r')
         time.sleep(1)
 
-    print()  
+    print()  # Move to the next line after the countdown
