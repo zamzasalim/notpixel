@@ -10,4 +10,3 @@ WIDTH = 1000
 HEIGHT = 1000
 MAX_HEIGHT = 100
 
-# Jika ada pengaturan lain, tambahkan di sini
