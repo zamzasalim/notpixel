@@ -117,7 +117,7 @@ def main(auth, proxy=None):
     if proxy:
         session.proxies.update({'http': proxy, 'https': proxy})
 
-    claim_successful = claim(headers)  # Claim and check result
+    claim_successful = claim(headers)  
 
     size = len(image) * len(image[0])
     order = [i for i in range(size)]
@@ -141,7 +141,7 @@ def main(auth, proxy=None):
                 print(crayons.red("ERROR | Token User Error - Please Update Token"))
                 break
             elif not result:
-                break  # If out of energy, exit loop for this account
+                break  
 
         except IndexError:
             print(f"ERROR | IndexError at position: {pos_image}, Coordinates: ({y}, {x})")
