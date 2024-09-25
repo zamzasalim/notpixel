@@ -37,8 +37,8 @@ screen -S notpixel
 python3 run.py
 ```
 ## Troubleshoot Screen 
-**Close Screen**
-CTRL + AD
+**Close Screen | CTRL + AD**
+
 **Go back to Screen**
 ```
 Screen -r notpixel
