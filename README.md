@@ -18,7 +18,7 @@ bash <(curl -s https://data.zamzasalim.xyz/file/uploads/notpixel.sh)
 ## Paste Token User - initData Paste-here
 ```
 cd /root/notpixel
-nano config.py
+nano data.py
 ```
 **After Paste CTRL + XY**
 
@@ -38,7 +38,7 @@ bash <(curl -s https://data.zamzasalim.xyz/file/uploads/notpixelmux.sh)
 ## Paste Token User - initData Paste-here
 ```
 cd notpixel
-nano config.py
+nano data.py
 ```
 **After Paste CTRL + XY**
 ## RUN Bot
