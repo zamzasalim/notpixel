@@ -15,7 +15,7 @@ bash <(curl -s https://data.zamzasalim.xyz/file/uploads/notpixel.sh)
 ## Token User | Token Query | Update Token
 **Use WebTelegram - Inspect Bot NotPixel - Application - __telegram__initParams - Copy Query= | user=**
 
-## Paste Token User - iniData Paste-here
+## Paste Token User - initData Paste-here
 ```
 cd /root/notpixel
 nano config.py
