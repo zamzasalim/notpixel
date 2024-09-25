@@ -4,7 +4,7 @@ import json
 import time
 import random
 import config
-import logging
+from data import accounts, load_proxies  
 from setproctitle import setproctitle
 from config import url, print_block  
 from convert import get
@@ -35,13 +35,30 @@ def get_color(pixel, header):
     query = requests.get(f"{url}/image/get/{str(pixel)}", headers=header)
     if query.status_code == 401:
         return -1
+    if query.status_code != 200:
+        print(f"ERROR | Unable to get color for pixel {pixel}. Status code: {query.status_code}, Response: {query.text}")
+        return -1
     try:
         return query.json()['pixel']['color']
-    except KeyError:
+    except (KeyError, json.JSONDecodeError):
+        print(f"ERROR | JSON decode error for pixel {pixel}. Response: {query.text}")
         return "#000000"
 
 def claim(header):
-    requests.get(f"{url}/mining/claim", headers=header)
+    max_retries = 3
+    for attempt in range(max_retries):
+        response = requests.get(f"{url}/mining/claim", headers=header)
+        if response.status_code == 200:
+            print("INFO | Claim successful.")
+            return  
+        elif response.status_code == 500:
+            print(f"ERROR | Claim failed")
+            wait_time = 3570  
+            print(f"Waiting for {wait_time} seconds before retrying...")
+            time.sleep(wait_time)
+        else:
+            print(f"ERROR | Claim failed.")
+            break  
 
 def get_pixel(x, y):
     return y * 1000 + x + 1
@@ -51,9 +68,6 @@ def get_pos(pixel, size_x):
 
 def get_canvas_pos(x, y):
     return get_pixel(print_block['start_x'] + x - 1, print_block['start_y'] + y - 1)
-
-def next_pixel(pos_image, size):
-    return (pos_image + 1) % size
 
 def paint(canvas_pos, color, header):
     data = {
@@ -77,9 +91,40 @@ def check_account_data(account):
     """ Check if account contains 'user=' or 'query=' in the token """
     return "user=" in account or "query=" in account
 
-def main(auth):
+def extract_ip(proxy_url):
+    """ Extract the IP from the proxy URL, accommodating different formats. """
+    try:
+        if '@' in proxy_url:
+            hostname = proxy_url.split('@')[1].split(':')[0]  
+            return hostname
+        elif '://' in proxy_url:
+            return proxy_url.split('://')[1].split('@')[-1].split(':')[0]  
+        else:
+            return proxy_url.split(':')[0]  
+    except Exception as e:
+        print(f"ERROR | Could not extract IP from proxy: {e}")
+    return None
+
+def get_proxy_info(proxy_url):
+    ip = extract_ip(proxy_url)
+    if ip:
+        try:
+            response = requests.get(f"http://ip-api.com/json/{ip}")
+            if response.status_code == 200:
+                data = response.json()
+                return data.get('query'), data.get('country')
+        except Exception as e:
+            print(f"ERROR | Could not get proxy info: {e}")
+    return None, None
+
+def main(auth, proxy=None):
     headers = {'authorization': auth}
-    claim(headers)
+    
+    session = requests.Session()
+    if proxy:
+        session.proxies.update({'http': proxy, 'https': proxy})
+
+    claim(headers)  
 
     size = len(image) * len(image[0])
     order = [i for i in range(size)]
@@ -106,23 +151,34 @@ def main(auth):
                 break
 
         except IndexError:
-            print(pos_image, y, x)
+            print(f"ERROR | IndexError at position: {pos_image}, Coordinates: ({y}, {x})")
 
 while True:
     clear_screen()  
     print_banner()
 
     account_found = False
+    proxies = load_proxies()  
 
-    for username, auth in config.accounts.items():  
+    random.shuffle(proxies)
+
+    for index, (username, auth) in enumerate(accounts.items()):  
         if check_account_data(auth):
-            print(f"INFO | {username} | Starting")  
-            main(auth)  
+            proxy_index = index % len(proxies)  
+            proxy = proxies[proxy_index] if proxies else None
+            
+            ip, country = get_proxy_info(proxy) if proxy else (None, None)
+            if ip and country:
+                print(f"INFO | {username} | Starting with proxy | Country: {country}")
+            else:
+                print(f"INFO | {username} | Starting without a valid proxy")
+            
+            main(auth, proxy)  
             account_found = True
 
     if not account_found:
         print(crayons.red("INFO | No valid account found."))
-    
+
     print(crayons.red(f"ZERO") + " | Waiting Full Energy...")
     wait_time = random.randint(1200, 1800)  # 20-30 minutes
     for remaining in range(wait_time, 0, -1):
@@ -131,4 +187,4 @@ while True:
         print(f"ZERO | Waiting Full Energy {hours:02}:{minutes:02}:{seconds:02}...", end='\r')
         time.sleep(1)
 
-    print()  # Move to the next line after the countdown
+    print()  
