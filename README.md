@@ -41,6 +41,10 @@ cd notpixel
 nano data.py
 ```
 **After Paste CTRL + XY**
+# Use Proxy (Opsional)
+```
+nano proxy.txt
+```
 ## RUN Bot
 **Create Screen**
 ```
