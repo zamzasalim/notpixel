@@ -2,7 +2,13 @@ url = "https://notpx.app/api/v1"
 
  # Don't Delete initData | Format: initData user= | Format: initData query=
 accounts = {
-    "Account 1": "initData Paste-Here",
+    "account1": "initData Paste-Here",
+    "account2": "initData Paste-Here",
+    "account3": "initData Paste-Here",
+    "account4": "initData Paste-Here",
+    "account5": "initData Paste-Here",
+    "account6": "initData Paste-Here",
+ # Add up to 100 accounts in this format
 }
 
 print_block = {
