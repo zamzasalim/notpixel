@@ -18,7 +18,9 @@ bash <(curl -s https://data.zamzasalim.xyz/file/uploads/notpixel.sh)
 ## Paste Token User - initData Paste-here
 ```
 cd /root/notpixel
-nano data.py
+```
+```
+nano data.txt
 ```
 **After Paste CTRL + XY**
 
@@ -38,7 +40,9 @@ bash <(curl -s https://data.zamzasalim.xyz/file/uploads/notpixelmux.sh)
 ## Paste Token User - initData Paste-here
 ```
 cd notpixel
-nano data.py
+```
+```
+nano data.txt
 ```
 **After Paste CTRL + XY**
 # Use Proxy (Opsional)
