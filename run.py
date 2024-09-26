@@ -169,8 +169,8 @@ def get_pos(pixel, size_x):
 def get_canvas_pos(x, y):
     return get_pixel(start_x + x - 1, start_y + y - 1)
 
-start_x = 810
-start_y = 635
+start_x = 920
+start_y = 386
 
 def paint(canvas_pos, color, header, session):
     data = {
@@ -225,7 +225,7 @@ def pause_and_wait():
     for remaining in range(wait_time, 0, -1):
         hours, remainder = divmod(remaining, 3600)
         minutes, seconds = divmod(remainder, 60)
-        print(f"INFO | Waiting Full Energy {hours:02}:{minutes:02}:{seconds:02}...", end='\r')
+        print(f"| INFO | Waiting Full Energy {hours:02}:{minutes:02}:{seconds:02}...", end='\r')
         time.sleep(1)
 
 def print_banner():
@@ -308,7 +308,7 @@ if __name__ == "__main__":
     print_banner()
     accounts = load_accounts_from_file('data.txt')
     if not accounts:
-        log_message("ERROR", "Token Kosong. Pastikan file data.txt berisi akun.")
+        log_message("ERROR", "Tidak ada akun yang ditemukan. Pastikan file data.txt berisi akun.")
         exit(1)
     proxies = load_proxies_from_file('proxy.txt')
     try:
