@@ -8,3 +8,4 @@ httpx
 httpx_socks
 aiofiles
 aiosqlite
+urllib3
