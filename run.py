@@ -169,8 +169,8 @@ def get_pos(pixel, size_x):
 def get_canvas_pos(x, y):
     return get_pixel(start_x + x - 1, start_y + y - 1)
 
-start_x = 920
-start_y = 386
+start_x = 893
+start_y = 818
 
 def paint(canvas_pos, color, header, session):
     data = {
